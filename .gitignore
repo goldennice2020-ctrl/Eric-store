@@ -13,3 +13,11 @@ uploads/apks/*
 uploads/icons/*
 !uploads/apks/.gitkeep
 !uploads/icons/.gitkeep
+.gradle/
+.kotlin/
+.idea/
+build/
+app/build/
+local.properties
+*.iml
+.DS_Store
