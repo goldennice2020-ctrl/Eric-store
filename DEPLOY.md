@@ -28,6 +28,32 @@ docker compose up -d --build
 
 服务会监听服务器本机的 `3002` 端口。
 
+## Render 部署
+
+Render 地址：
+
+```text
+https://eric-store.onrender.com
+```
+
+Render 会提供 `PORT` 环境变量，项目的 `npm start` 会监听：
+
+```text
+process.env.PORT || 3002
+```
+
+Render 环境变量至少设置：
+
+```env
+ADMIN_PASSWORD="你的后台密码"
+SESSION_SECRET="换成很长的随机字符串"
+UPLOAD_TOKEN="给 Codex 上传用的长 token"
+DATABASE_URL="file:/data/dev.db"
+UPLOAD_ROOT="/data/uploads"
+```
+
+Render 免费版文件系统是临时的，服务重启或重新部署后 SQLite 数据和 APK 文件可能丢失。它可以用于先跑通公网访问；如果要长期稳定保存 APK，需要换成 Render Disk、云服务器磁盘，或后续接 OSS/Supabase Storage。
+
 ## 域名反向代理
 
 把你的域名反向代理到：
