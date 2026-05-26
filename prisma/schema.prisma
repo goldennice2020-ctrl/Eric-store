@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AppProject {
+  id              String       @id @default(cuid())
+  name            String
+  packageName     String       @unique
+  description     String
+  iconUrl         String?
+  status          String       @default("DEVELOPING")
+  latestVersionId String?
+  releases        AppRelease[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model AppRelease {
+  id           String     @id @default(cuid())
+  appProjectId String
+  appProject   AppProject @relation(fields: [appProjectId], references: [id], onDelete: Cascade)
+  versionName  String
+  versionCode  Int?
+  apkUrl       String
+  apkFileName  String
+  apkSize      Int
+  sha256       String
+  changelog    String
+  createdAt    DateTime   @default(now())
+  isLatest     Boolean    @default(false)
+
+  @@index([appProjectId, createdAt])
+}

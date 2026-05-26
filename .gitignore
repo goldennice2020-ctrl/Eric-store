@@ -1,0 +1,15 @@
+node_modules
+.next
+dist
+*.log
+.env
+.env.local
+dev.db
+prisma/dev.db
+android-app/.gradle
+android-app/**/build
+data
+uploads/apks/*
+uploads/icons/*
+!uploads/apks/.gitkeep
+!uploads/icons/.gitkeep

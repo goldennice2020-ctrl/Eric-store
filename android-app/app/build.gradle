@@ -1,0 +1,21 @@
+plugins {
+    id "com.android.application"
+}
+
+android {
+    namespace "com.ericstore.app"
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.ericstore.app"
+        minSdk 23
+        targetSdk 36
+        versionCode 1
+        versionName "1.0.0"
+        buildConfigField "String", "STORE_URL", "\"${System.getenv("ERIC_STORE_APP_URL") ?: "http://127.0.0.1:3002"}\""
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}

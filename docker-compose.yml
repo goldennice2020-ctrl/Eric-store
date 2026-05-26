@@ -1,0 +1,17 @@
+services:
+  eric-store:
+    build: .
+    container_name: eric-store
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    environment:
+      DATABASE_URL: "file:/data/dev.db"
+      UPLOAD_ROOT: "/data/uploads"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD:-change-me}"
+      SESSION_SECRET: "${SESSION_SECRET:-replace-this-with-a-long-random-secret}"
+      UPLOAD_TOKEN: "${UPLOAD_TOKEN:-replace-this-upload-token}"
+      PORT: "3002"
+      HOSTNAME: "0.0.0.0"
+    volumes:
+      - ./data:/data
