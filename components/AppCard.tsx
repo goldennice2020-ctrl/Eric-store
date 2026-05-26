@@ -1,71 +1,44 @@
 import Link from "next/link";
-import { Download, ExternalLink } from "lucide-react";
 import { AppWithLatest } from "@/lib/store";
-import { formatBytes, formatDate } from "@/lib/format";
+import { formatBytes } from "@/lib/format";
 import { IconBox } from "@/components/IconBox";
-import { StatusPill } from "@/components/StatusPill";
 
 export function AppCard({ app }: { app: AppWithLatest }) {
   const latest = app.releases[0];
 
   return (
-    <article className="rounded-lg border border-line bg-panel p-4 shadow-xl shadow-black/10">
-      <div className="flex items-start gap-3">
-        <IconBox src={app.iconUrl} name={app.name} />
+    <article className="group flex min-h-[118px] items-center gap-4 border-b border-white/6 py-4 md:min-h-[132px] md:gap-5 md:py-5">
+      <Link href={`/apps/${app.id}`} className="flex min-w-0 flex-1 items-center gap-4 md:gap-5">
+        <IconBox src={app.iconUrl} name={app.name} size="store" />
         <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
-            <h2 className="truncate text-lg font-semibold">{app.name}</h2>
-            <StatusPill status={app.status} />
-          </div>
-          <p className="mt-1 truncate font-mono text-xs text-muted">{app.packageName}</p>
+          <h2 className="truncate text-[24px] font-semibold leading-tight text-zinc-50 md:text-[30px]">
+            {app.name}
+          </h2>
+          <p className="mt-1 font-mono text-[17px] leading-snug text-zinc-500 md:text-[20px]">
+            {latest ? formatBytes(latest.apkSize) : "暂无 APK"}
+          </p>
+          <p className="mt-1 line-clamp-1 text-[17px] leading-snug text-zinc-500 md:text-[20px]">
+            {app.description || app.packageName}
+          </p>
         </div>
-      </div>
+      </Link>
 
-      <p className="mt-4 line-clamp-2 min-h-10 text-sm leading-5 text-zinc-300">
-        {app.description || "暂无说明"}
-      </p>
-
-      <div className="mt-4 grid grid-cols-2 gap-3 border-t border-line pt-4 text-xs text-muted">
-        <div>
-          <div>当前版本</div>
-          <div className="mt-1 font-mono text-ink">{latest?.versionName || "未上传"}</div>
-        </div>
-        <div>
-          <div>安装包大小</div>
-          <div className="mt-1 font-mono text-ink">
-            {latest ? formatBytes(latest.apkSize) : "-"}
-          </div>
-        </div>
-        <div className="col-span-2">
-          <div>最近更新</div>
-          <div className="mt-1 font-mono text-ink">{formatDate(app.updatedAt)}</div>
-        </div>
-      </div>
-
-      <div className="mt-4 flex gap-2">
+      <div className="shrink-0">
         {latest ? (
           <a
             href={latest.apkUrl}
-            className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-md bg-accent px-3 text-sm font-medium text-black hover:bg-emerald-300"
+            className="inline-flex h-12 min-w-[96px] items-center justify-center rounded-full bg-[#27262e] px-6 text-[20px] font-semibold text-[#1684ff] transition hover:bg-[#31303a] md:h-14 md:min-w-[116px] md:text-[24px]"
           >
-            <Download className="h-4 w-4" />
-            下载 APK
+            安装
           </a>
         ) : (
           <button
             disabled
-            className="h-10 flex-1 rounded-md border border-line px-3 text-sm text-muted"
+            className="inline-flex h-12 min-w-[96px] items-center justify-center rounded-full bg-[#27262e] px-5 text-[18px] font-semibold text-zinc-500 md:h-14 md:min-w-[116px]"
           >
-            暂无 APK
+            等待
           </button>
         )}
-        <Link
-          href={`/apps/${app.id}`}
-          className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-line bg-panel2 px-3 text-sm hover:border-accent"
-        >
-          <ExternalLink className="h-4 w-4" />
-          详情
-        </Link>
       </div>
     </article>
   );

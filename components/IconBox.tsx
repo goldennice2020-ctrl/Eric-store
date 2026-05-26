@@ -7,10 +7,12 @@ export function IconBox({
 }: {
   src?: string | null;
   name: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "store";
 }) {
   const className =
-    size === "lg"
+    size === "store"
+      ? "h-[82px] w-[82px] rounded-[22px] md:h-[96px] md:w-[96px] md:rounded-[26px]"
+      : size === "lg"
       ? "h-20 w-20"
       : size === "sm"
         ? "h-11 w-11"
@@ -18,7 +20,7 @@ export function IconBox({
 
   return (
     <div
-      className={`${className} flex shrink-0 items-center justify-center overflow-hidden rounded-lg border border-line bg-panel2`}
+      className={`${className} flex shrink-0 items-center justify-center overflow-hidden border border-white/10 bg-panel2 shadow-lg shadow-black/20`}
     >
       {src ? (
         // eslint-disable-next-line @next/next/no-img-element
